@@ -21,13 +21,20 @@ int main(int argc, char *argv[])
     char *all_the_fucking_colors[] = {red, orange, yellow, green, blue, indigo, violet};
     int number_of_all_the_fucking_colors = 6;
     int the_current_fucking_color = 0;
+
+    struct winsize w;
+    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+    int rainbow_height = (int)(w.ws_col / 21);
+
     while(1)
     {
-        struct winsize w;
-        ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
-        for(int i = 0; i < w.ws_col; i++)
+        for(int row = 0; row < rainbow_height; row++)
         {
-            printf("%s%c\e[49m", all_the_fucking_colors[the_current_fucking_color], ' ');
+            for(int i = 0; i < w.ws_col; i++)
+            {
+                printf("%s%c\e[49m", all_the_fucking_colors[the_current_fucking_color], ' ');
+            }
+            printf("\n");
         }
 
         if(the_current_fucking_color < number_of_all_the_fucking_colors)
